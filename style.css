@@ -1,148 +1,541 @@
-* {
+/* Kleuren & basisinstellingen */
+:root {
+  /* Basis Sinterklaas-palet */
+  --color-bg: #050716;            /* Donkere nacht */
+  --color-bg-soft: #111424;       /* Iets lichtere nacht */
+  --color-card: #2b1710;          /* Chocolade/speculaas */
+  --color-primary: #b3001b;       /* Mijter-rood */
+  --color-primary-soft: #e02b2b;  /* Lichter rood voor gradients */
+  --color-accent: #f4c542;        /* Goud van staf/randen */
+  --color-accent-soft: #ffe9a3;   /* Lichte gouden gloed */
+  --color-text: #fff7e9;          /* Warme crème */
+  --color-muted: #d0c0aa;         /* Zachte beige tekst */
+
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --shadow-soft: 0 14px 35px rgba(0, 0, 0, 0.55);
+  --spacing-page: 1.5rem;
+  --max-width: 1100px;
+  --transition-fast: 0.2s ease;
+  --font-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: radial-gradient(circle at top, #2c3e50, #000);
-  color: #f5f5f5;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-base);
+  background:
+    radial-gradient(circle at top, #19244a 0, #050716 55%, #02030a 100%);
+  color: var(--color-text);
+}
+
+/* Pagina layout */
+.page {
   min-height: 100vh;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-.app {
-  max-width: 600px;
-  width: 100%;
+/* Header met mijter-gevoel (rode en gouden banen) */
+.site-header {
+  padding: 1.5rem var(--spacing-page) 0.5rem;
+  background:
+    linear-gradient(
+      135deg,
+      #b3001b 0,
+      #b3001b 30%,
+      #f4c542 31%,
+      #f4c542 33%,
+      #e02b2b 34%,
+      #7b0013 100%
+    );
+  border-bottom: 3px solid rgba(244, 197, 66, 0.75);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 20px;
+.site-header-inner {
+  margin: 0 auto;
+  max-width: var(--max-width);
 }
 
-.header h1 {
-  margin: 0 0 10px;
-  font-size: 2.1rem;
+.site-header h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
 }
 
 .subtitle {
-  margin: 0;
-  color: #d0d0d0;
+  margin: 0.4rem 0 0;
+  color: var(--color-accent-soft);
+  font-size: 0.95rem;
 }
 
-.card {
-  background: rgba(20, 20, 30, 0.9);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  margin-bottom: 16px;
+.site-main {
+  flex: 1;
+  padding: 1rem var(--spacing-page) 2rem;
+  display: flex;
+  flex-direction: column;   
+  align-items: center;   
 }
 
-.hidden {
+/* Views */
+.view {
   display: none;
+  width: 100%;
 }
 
-button {
-  background: #ffb400;
-  color: #000;
-  border: none;
-  border-radius: 999px;
-  padding: 10px 18px;
-  font-size: 1rem;
-  cursor: pointer;
-  font-weight: 600;
-  margin-top: 10px;
-  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+.view--active {
+  display: block;
 }
 
-button:hover {
-  background: #ffd15c;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  transform: translateY(-1px);
+.overview-inner,
+.puzzle-view-inner {
+  margin: 0 auto;
+  max-width: var(--max-width);
+  background: radial-gradient(circle at top left, #3b2417 0, #1a1010 45%, #0c0707 100%);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+  padding: 1.75rem 1.75rem 1.5rem;
+  border: 1px solid rgba(244, 197, 66, 0.2);
+  position: relative;
+  overflow: hidden;
 }
 
-button:active {
-  transform: translateY(1px) scale(0.98);
-  box-shadow: none;
+/* Gouden randje bovenin de panelen */
+.overview-inner::before,
+.puzzle-view-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border-top: 3px solid rgba(244, 197, 66, 0.55);
+  pointer-events: none;
 }
 
-.puzzle-input {
+/* Titels en tekst */
+.section-title {
+  margin-top: 0;
+  margin-bottom: 1.3rem;
+  font-size: 1.3rem;
+  color: var(--color-accent-soft);
+}
+
+/* Puzzel-grid */
+.puzzle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.puzzle-card {
+  background: linear-gradient(145deg, #2b1710, #3a2218);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.1rem;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 16px;
+  gap: 0.5rem;
+  border: 1px solid rgba(244, 197, 66, 0.25);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+  cursor: pointer;
+  position: relative;
 }
 
-label {
-  font-size: 0.9rem;
-  color: #cccccc;
+.puzzle-card::before {
+  /* subtiel confetti-achtig randje */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border-top: 2px solid rgba(255, 247, 233, 0.2);
+  opacity: 0.6;
+  pointer-events: none;
 }
 
-input[type="text"] {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #555;
-  background: #111722;
-  color: #f5f5f5;
+.puzzle-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.45);
+  border-color: rgba(244, 197, 66, 0.7);
+  background: linear-gradient(145deg, #3b2217, #4a2a1b);
+}
+
+.puzzle-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.puzzle-card-title {
+  margin: 0;
   font-size: 1rem;
 }
 
-input[type="text"]:focus {
-  outline: 2px solid #ffb400;
-  border-color: transparent;
-}
-
-.feedback {
-  min-height: 20px;
-  margin-top: 10px;
-  font-weight: 500;
-}
-
-.feedback.ok {
-  color: #8be78b;
-}
-
-.feedback.error {
-  color: #ff7b7b;
-}
-
-.progress {
-  width: 100%;
-  height: 8px;
-  border-radius: 999px;
-  background: #333;
-  overflow: hidden;
-  margin-top: 18px;
-}
-
-.progress-bar {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, #ffb400, #ff5e62);
-  transition: width 0.25s ease-out;
-}
-
-.progress-text {
+.puzzle-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 0.85rem;
-  margin-top: 6px;
-  color: #bbbbbb;
+  color: var(--color-muted);
 }
 
-.final-clue-title {
-  margin-top: 16px;
-  font-weight: bold;
+.puzzle-card-description {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
 }
 
-.final-clue {
+.puzzle-image-zoom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.puzzle-image-zoom img {
+  max-width: 100%;
+  border-radius: 16px;
+  border: 1px solid rgba(244, 197, 66, 0.6);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
+  object-fit: cover;
+}
+
+.puzzle-image-zoom-hint {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+/* Status badge */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 197, 66, 0.35);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.status-pill::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-open {
+  color: #ffe9bf;
+  border-color: rgba(244, 197, 66, 0.7);
+  background: rgba(244, 197, 66, 0.12);
+}
+
+.status-open::before {
+  background: var(--color-accent);
+}
+
+.status-done {
+  color: #d7ffe0;
+  border-color: rgba(150, 255, 180, 0.7);
+  background: rgba(40, 120, 70, 0.3);
+}
+
+.status-done::before {
+  background: #52e07d;
+}
+
+/* Knoppen */
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: radial-gradient(circle at top left, var(--color-accent), var(--color-primary));
+  color: white;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.45);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    filter var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+  filter: brightness(1.05);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.btn--ghost {
+  background: rgba(5, 7, 22, 0.5);
+  color: var(--color-accent-soft);
+  border-radius: 999px;
+  border: 1px solid rgba(244, 197, 66, 0.7);
+  padding: 0.35rem 0.9rem;
+  box-shadow: none;
+  font-size: 0.85rem;
+}
+
+.btn--ghost:hover {
+  background: rgba(244, 197, 66, 0.15);
+}
+
+/* Puzzel detail view */
+.puzzle-view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.puzzle-view-title-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+#puzzle-title {
+  margin: 0;
   font-size: 1.2rem;
-  margin-top: 8px;
-  padding: 12px;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px dashed #ffb400;
+}
+
+.puzzle-intro {
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  color: var(--color-accent-soft);
+}
+
+.puzzle-content {
+  background: radial-gradient(circle at top left, #3a2218 0, #150b09 45%, #090505 100%);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  min-height: 120px;
+  border: 1px solid rgba(244, 197, 66, 0.25);
+}
+
+.puzzle-content p {
+  margin-top: 0;
+}
+
+/* Audio */
+.puzzle-content audio {
+  width: 100%;
+  margin-top: 0.8rem;
+}
+
+/* Antwoordblok */
+.puzzle-answer {
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(244, 197, 66, 0.25);
+  padding-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.answer-label {
+  font-size: 0.9rem;
+  color: var(--color-accent-soft);
+}
+
+.puzzle-answer-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#answer-input {
+  flex: 1;
+  min-width: 160px;
+  padding: 0.5rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 197, 66, 0.45);
+  background: rgba(5, 7, 22, 0.8);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  outline: none;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background var(--transition-fast);
+}
+
+#answer-input::placeholder {
+  color: rgba(255, 247, 233, 0.4);
+}
+
+#answer-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px rgba(244, 197, 66, 0.7);
+  background: rgba(5, 7, 22, 0.95);
+}
+
+.answer-feedback {
+  min-height: 1.1rem;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.answer-feedback--correct {
+  color: #c5ffd9;
+}
+
+.answer-feedback--wrong {
+  color: #ffb8b8;
+}
+
+/* Footer */
+.site-footer {
+  padding: 0.5rem var(--spacing-page) 1.2rem;
+  background: linear-gradient(to right, #070912, #111424);
+  border-top: 1px solid rgba(244, 197, 66, 0.3);
+}
+
+.site-footer-inner {
+  margin: 0 auto;
+  max-width: var(--max-width);
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
+/* Geheime eindhint knop onderin */
+.secret-section {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.btn--secret {
+  position: relative;
+  padding-inline: 1.6rem;
+}
+
+/* Extra glow als alles is unlocked */
+.btn--secret-unlocked {
+  box-shadow: 0 0 18px rgba(244, 197, 66, 0.9);
+}
+
+/* Modal (pop-up) */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none; /* standaard verborgen */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal--visible {
+  display: flex;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.modal-dialog {
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+  width: 90%;
+  border-radius: 20px;
+  background: radial-gradient(circle at top left, #3b2417 0, #1a1010 45%, #0c0707 100%);
+  border: 1px solid rgba(244, 197, 66, 0.7);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+  padding: 1rem 1.2rem 1.1rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--color-accent-soft);
+}
+
+.modal-close {
+  border: none;
+  background: transparent;
+  color: var(--color-accent-soft);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--color-accent);
+}
+
+.modal-body {
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.secret-location-text {
+  margin-top: 0.6rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: 12px;
+  background: rgba(5, 7, 22, 0.75);
+  border: 1px dashed rgba(244, 197, 66, 0.7);
+  font-weight: 500;
+  white-space: pre-line; /* zodat je \n in JS netjes op nieuwe regels komen */
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .overview-inner,
+  .puzzle-view-inner {
+    padding: 1.2rem 1.2rem 1rem;
+  }
+
+  .site-main {
+    padding: 0.5rem var(--spacing-page) 1.5rem;
+  }
+
+  .puzzle-answer-row {
+    align-items: stretch;
+  }
+
+  #answer-input {
+    width: 100%;
+  }
 }

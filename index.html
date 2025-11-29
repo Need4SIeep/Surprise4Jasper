@@ -2,60 +2,105 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <title>Surprise Puzzel voor Jasper</title>
+  <title>Jasperino</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <h1>Surprise Puzzel 🎁</h1>
-      <p class="subtitle">Jasper, los de puzzels op en ontdek waar je cadeau verstopt is...</p>
+  <div class="page">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <h1>Surprise voor Jaspertje</h1>
+      </div>
     </header>
 
-    <main>
-      <section id="intro" class="card">
-        <h2>Welkom Jasper</h2>
-        <p>
-          Klaar voor je missie? Je krijgt een reeks puzzels. Los ze in de juiste volgorde op.
-          Elke juiste oplossing opent de volgende puzzel. Aan het eind hoor je waar je cadeau ligt.
-        </p>
-        <button id="startButton">Start met puzzelen</button>
-      </section>
-
-      <section id="puzzleSection" class="card hidden">
-        <div class="puzzle-header">
-          <h2 id="puzzleTitle"></h2>
-          <p id="puzzleDescription"></p>
+    <main class="site-main">
+      <!-- Overzicht met puzzel-kaarten -->
+      <div id="overview-view" class="view view--active">
+        <div class="overview-inner">
+          <h2 class="section-title">Kies een puzzel</h2>
+          <div id="puzzle-list" class="puzzle-grid">
+            <!-- Puzzelkaarten worden via JS toegevoegd -->
+          </div>
         </div>
+      </div>
 
-        <div class="puzzle-input">
-          <label for="answerInput">Jouw antwoord:</label>
-          <input id="answerInput" type="text" autocomplete="off" />
-          <button id="submitAnswer">Controleer</button>
+      <!-- Detailweergave van één puzzel -->
+      <div id="puzzle-view" class="view">
+        <div class="puzzle-view-inner">
+          <div class="puzzle-view-header">
+            <button id="back-button" class="btn btn--ghost">
+              ←
+            </button>
+            <div class="puzzle-view-title-group">
+              <h2 id="puzzle-title"></h2>
+              <span id="puzzle-status" class="status-pill"></span>
+            </div>
+          </div>
+
+          <div id="puzzle-intro" class="puzzle-intro">
+            <!-- Korte uitleg / verhaal van de puzzel -->
+          </div>
+
+          <div id="puzzle-content" class="puzzle-content">
+            <!-- Eigenlijke puzzel-content (tekst, audio, afbeelding, etc.) -->
+          </div>
+
+          <!-- Antwoord-invoer -->
+          <div class="puzzle-answer">
+            <label for="answer-input" class="answer-label">
+              Jouw antwoord
+            </label>
+            <div class="puzzle-answer-row">
+              <input
+                type="text"
+                id="answer-input"
+                autocomplete="off"
+                placeholder="Typ hier je antwoord…"
+              />
+              <button id="check-answer-button" class="btn">
+                Controleer antwoord
+              </button>
+            </div>
+            <div id="answer-feedback" class="answer-feedback"></div>
+          </div>
         </div>
+      </div>
 
-        <p id="feedback" class="feedback"></p>
+            <!-- Geheime eindhint knop -->
+      <div class="secret-section">
+        <button id="secret-button" class="btn btn--secret">
+          🎁 Geheime eindhint
+        </button>
+      </div>
 
-        <div class="progress">
-          <div id="progressBar" class="progress-bar"></div>
+      <!-- Pop-up met geheime locatie -->
+      <div id="secret-modal" class="modal">
+        <div id="secret-modal-backdrop" class="modal-backdrop"></div>
+        <div class="modal-dialog">
+          <div class="modal-header">
+            <h2>Geheime locatie</h2>
+            <button id="secret-modal-close" class="modal-close" aria-label="Sluiten">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="secret-locked-message">
+              Je bent er bijna! Los eerst alle puzzels op om de geheime locatie te zien.
+            </div>
+            <div id="secret-location" class="secret-location-text"></div>
+          </div>
         </div>
+      </div>
 
-        <p class="progress-text">
-          Puzzel <span id="currentPuzzleNumber"></span> van
-          <span id="totalPuzzles"></span>
-        </p>
-      </section>
-
-      <section id="finalSection" class="card hidden">
-        <h2>Gefeliciteerd! 🥳</h2>
-        <p>Je hebt alle puzzels opgelost.</p>
-        <p class="final-clue-title">De verstopplaats van je cadeaus:</p>
-        <p id="finalClue" class="final-clue"></p>
-      </section>
     </main>
-  </div>
 
-  <script src="script.js"></script>
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <small>Gemaakt door de IT-piet</small>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
