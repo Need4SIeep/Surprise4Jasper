@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Surprise Puzzel voor Jasper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>Surprise Puzzel 🎁</h1>
+      <p class="subtitle">Jasper, los de puzzels op en ontdek waar je cadeau verstopt is...</p>
+    </header>
+
+    <main>
+      <section id="intro" class="card">
+        <h2>Welkom Jasper</h2>
+        <p>
+          Klaar voor je missie? Je krijgt een reeks puzzels. Los ze in de juiste volgorde op.
+          Elke juiste oplossing opent de volgende puzzel. Aan het eind hoor je waar je cadeau ligt.
+        </p>
+        <button id="startButton">Start met puzzelen</button>
+      </section>
+
+      <section id="puzzleSection" class="card hidden">
+        <div class="puzzle-header">
+          <h2 id="puzzleTitle"></h2>
+          <p id="puzzleDescription"></p>
+        </div>
+
+        <div class="puzzle-input">
+          <label for="answerInput">Jouw antwoord:</label>
+          <input id="answerInput" type="text" autocomplete="off" />
+          <button id="submitAnswer">Controleer</button>
+        </div>
+
+        <p id="feedback" class="feedback"></p>
+
+        <div class="progress">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+
+        <p class="progress-text">
+          Puzzel <span id="currentPuzzleNumber"></span> van
+          <span id="totalPuzzles"></span>
+        </p>
+      </section>
+
+      <section id="finalSection" class="card hidden">
+        <h2>Gefeliciteerd! 🥳</h2>
+        <p>Je hebt alle puzzels opgelost.</p>
+        <p class="final-clue-title">De verstopplaats van je cadeaus:</p>
+        <p id="finalClue" class="final-clue"></p>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
