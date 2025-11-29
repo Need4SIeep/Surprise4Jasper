@@ -11,7 +11,7 @@
 const puzzles = [
   {
     id: "p1",
-    title: "Muzikale Memory",
+    title: "Als muziek in m'n oren",
     theme: "Muziek",
     status: "open",
     type: "audio",
@@ -29,47 +29,111 @@ const puzzles = [
   },
   {
     id: "p2",
-    title: "Snoepgoed Rebus",
-    theme: "Snoepgoed",
+    title: "Jasper's geheugentraining",
+    theme: "Herinneringen",
     status: "open",
-    type: "text",
-    shortDescription: "Los de rebus op en ontdek het favoriete snoepje.",
-    introHtml:
-      "<p>Onderstaande rebus leidt naar een typisch Sinterklaas-lekkernij. Vul het eindwoord hieronder in.</p>",
-    html: `
-      <p><strong>Rebus:</strong></p>
-      <ul>
-        <li>📦 minus 'x'</li>
-        <li>🐟 minus 's'</li>
-        <li>🍫</li>
-      </ul>
-      <p>Welk snoepgoed komt eruit?</p>
+    type: "memory",
+    introHtml: `
+      <p>
+        Zoek de kaartjes die bij elkaar horen. 
+        Elke set heeft met jouw avonturen te maken…
+      </p>
     `,
-    correctAnswers: ["pepernoot", "pepernoten"]
+    // Elke entry is één paar; de code maakt er automatisch 2 kaartjes van.
+    memoryPairs: [
+      {
+        id: "mem-1",
+        img: "img/Jasper_Mem1.jpeg"
+      },
+      {
+        id: "mem-2",
+        img: "img/Jasper_Mem2.jpeg"
+      },
+      {
+        id: "mem-3",
+        img: "img/Jasper_Mem3.jpeg"
+      },
+      {
+        id: "mem-4",
+        img: "img/Jasper_Mem4.jpeg"
+      },
+      {
+        id: "mem-5",
+        img: "img/Jasper_Mem5.jpeg"
+      },
+      {
+        id: "mem-6",
+        img: "img/Jasper_Mem6.jpeg"
+      },
+      {
+        id: "mem-7",
+        img: "img/Jasper_Mem7.jpeg"
+      },
+      {
+        id: "mem-8",
+        img: "img/Jasper_Mem8.jpeg"
+      },
+      {
+        id: "mem-9",
+        img: "img/Jasper_Mem9.jpeg"
+      },
+      {
+        id: "mem-10",
+        img: "img/Jasper_Mem10.jpeg"
+      }
+    ],
+    correctAnswers: [] // wordt niet gebruikt
   },
   {
     id: "p3",
-    title: "Rijmraadsel",
-    theme: "Rijmen",
+    title: "Tijdreisje maken?",
+    theme: "Chronologie",
     status: "open",
-    type: "text",
-    shortDescription: "Vul het ontbrekende rijmwoord in.",
-    introHtml:
-      "<p>Lees het versje en vul het ontbrekende rijmwoord hieronder in.</p>",
-    html: `
+    type: "chrono",
+    introHtml: `
       <p>
-        Sinterklaas zat te denken<br/>
-        wat hij Martijn dit jaar zou <span style="border-bottom:1px dashed #f2c14f;">________</span>.<br/>
-        Iets met puzzels, slim en fijn,<br/>
-        dat moet vast voor <em>...?</em>
+        Zet deze momenten uit je leven in de juiste volgorde van oud (1) naar nieuw (6).
       </p>
-      <p>Vul één rijmwoord in dat mooi past.</p>
     `,
-    correctAnswers: ["schenken", "bedenken"]
+    chronoItems: [
+      {
+        id: "c1",
+        label: "",
+        img: "img/8_feb_2022.jpeg"
+      },
+      {
+        id: "c2",
+        label: "",
+        img: "img/8_mrt_2023.jpeg"
+      },
+      {
+        id: "c3",
+        label: "",
+        img: "img/9_aug_2023.jpeg"
+      },
+      {
+        id: "c4",
+        label: "",
+        img: "img/14_jul_2024.jpeg"
+      },
+      {
+        id: "c5",
+        label: "",
+        img: "img/19_jan_2025.jpeg"
+      },
+      {
+        id: "c6",
+        label: "",
+        img: "img/21_jan_2022.jpeg"
+      }
+    ],
+    // juiste volgorde van die momenten (oud → nieuw)
+    correctOrder: ["c6", "c1", "c2", "c3", "c4", "c5"],
+    correctAnswers: [] // niet gebruikt
   },
   {
     id: "p4",
-    title: "De Sint ziet alles",
+    title: "Sint ziet alles",
     theme: "Route",
     status: "open",
     type: "custom",
@@ -117,7 +181,7 @@ const puzzles = [
   },
   {
     id: "p6",
-    title: "Sinterdoku",
+    title: "Jasperdoku",
     theme: "Logica",
     status: "open",
     type: "sudoku",
@@ -144,8 +208,83 @@ const puzzles = [
     ],
     // wordt niet gebruikt, maar laat leeg voor duidelijkheid
     correctAnswers: []
+  },
+  {
+    id: "p7",
+    title: "Let op!",
+    theme: "Geheugen",
+    status: "open",
+    type: "flashQuiz",
+    introHtml: `
+      <p>
+        Je krijgt steeds 3 seconden een foto te zien.  
+        Daarna verdwijnt de foto en krijg je een vraag.  
+        Beantwoord je fout, dan komt gewoon een volgende foto om het nogmaals te proberen.
+      </p>
+    `,
+    flashCards: [
+      {
+        id: "f1",
+        img: "img/Flash1.jpeg",
+        question: "Welke kleur waren de schoenen van Douwe?",
+        correctAnswers: ["rood", "rode"]
+      },
+      {
+        id: "f2",
+        img: "img/Flash2.jpeg",
+        question: "Welk voorwerp was afgebeeld op Lei zijn shirt?",
+        correctAnswers: ["schaar", "een schaar"]
+      },
+      {
+        id: "f3",
+        img: "img/Flash3.jpeg",
+        question: "Hoe duur was een pizza daar?",
+        correctAnswers: ["vijf euro", "5 euro"]
+      },
+      {
+        id: "f4",
+        img: "img/Flash4.jpeg",
+        question: "Wie had er geen veiligheidshesje aan?",
+        correctAnswers: ["Luc", "Lucius", "Lucius Robertus Maria Stienissen"]
+      }
+    ],
+    correctAnswers: [] // gebruiken we hier niet
   }
+
 ];
+
+const STORAGE_KEY = "jasper-puzzel-state-v1";
+
+function saveStateToStorage() {
+  try {
+    const data = puzzles.map((p) => ({
+      id: p.id,
+      status: p.status
+    }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.error("Kon puzzelstatus niet opslaan:", e);
+  }
+}
+
+function loadStateFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (!Array.isArray(saved)) return;
+
+    saved.forEach((s) => {
+      const puzzle = puzzles.find((p) => p.id === s.id);
+      if (!puzzle) return;
+      if (s.status === "done" || s.status === "open") {
+        puzzle.status = s.status;
+      }
+    });
+  } catch (e) {
+    console.error("Kon puzzelstatus niet laden:", e);
+  }
+}
 
 const SECRET_LOCATION_TEXT = `
 Je cadeau ligt in de kast in de woonkamer,
@@ -175,9 +314,13 @@ const secretModalBackdrop = document.getElementById("secret-modal-backdrop");
 const secretModalClose = document.getElementById("secret-modal-close");
 const secretLockedMessage = document.getElementById("secret-locked-message");
 const secretLocationEl = document.getElementById("secret-location");
+const itPietTrigger = document.getElementById("it-piet-trigger");
+const answerSection = document.getElementById("answer-section");
 
 // Huidig geselecteerde puzzel
 let currentPuzzleId = null;
+let memoryTimerId = null;
+let flashTimerId = null;
 
 // ==== Helpers ====
 
@@ -237,6 +380,110 @@ function updateSecretUI() {
   }
 }
 
+function clearMemoryTimer() {
+  if (memoryTimerId !== null) {
+    clearInterval(memoryTimerId);
+    memoryTimerId = null;
+  }
+  const el = document.getElementById("memory-timer");
+  if (el && el.parentNode) {
+    el.parentNode.removeChild(el);
+  }
+}
+
+function startMemoryTimer(puzzle) {
+  // eerst eventuele oude timer opruimen
+  clearMemoryTimer();
+
+  // geen timer starten als puzzel al klaar is
+  if (puzzle.status === "done") return;
+
+  const timerEl = document.createElement("div");
+  timerEl.id = "memory-timer";
+  timerEl.className = "memory-timer";
+
+  let remaining = 60; // 60 seconden
+  timerEl.textContent = `Tijd over: ${remaining}s`;
+
+  // bovenaan in de puzzel-content
+  puzzleContentEl.prepend(timerEl);
+
+  memoryTimerId = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      clearMemoryTimer();
+      setFeedback(
+        "De tijd is om! De kaartjes worden opnieuw geschud… ⏱️",
+        "wrong"
+      );
+      // opnieuw tekenen (met nieuwe shuffle)
+      puzzleContentEl.innerHTML = "";
+      renderMemoryPuzzle(puzzle);
+      return;
+    }
+    timerEl.textContent = `Tijd over: ${remaining}s`;
+  }, 1000);
+}
+
+function showToast(message) {
+  const container = document.getElementById("toast-container");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+
+  container.appendChild(toast);
+
+  // Trigger animatie
+  requestAnimationFrame(() => {
+    toast.classList.add("show");
+  });
+
+  // Automatisch verwijderen
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => {
+      toast.remove();
+    }, 300);
+  }, 2000);
+}
+
+function resetAllPuzzles() {
+  // alle statussen terug naar 'open'
+  puzzles.forEach((p) => {
+    p.status = "open";
+    // eventuele runtime dingen resetten
+    if (p.type === "imageZoom") {
+      p.currentStage = 0;
+    }
+  });
+
+  // localStorage leegmaken als je die gebruikt
+  try {
+    if (typeof STORAGE_KEY !== "undefined") {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  } catch (e) {
+    console.error("Kon puzzelstatus niet verwijderen:", e);
+  }
+
+  // UI terug naar start
+  answerInput.disabled = false;
+  checkAnswerButton.disabled = false;
+  setFeedback("", null);
+
+  puzzleView.classList.remove("view--active");
+  overviewView.classList.add("view--active");
+
+  renderOverview();
+  if (typeof updateSecretUI === "function") {
+    updateSecretUI();
+  }
+
+  showToast("Alle puzzels zijn gereset door de IT-piet");
+}
+
 // ==== Rendering van het overzicht ====
 
 // ==== Rendering van het overzicht ====
@@ -282,6 +529,8 @@ function renderOverview() {
 // ==== Detailweergave puzzel ====
 
 function showPuzzle(puzzleId) {
+  clearMemoryTimer();
+  clearFlashTimer();
   const puzzle = puzzles.find((p) => p.id === puzzleId);
   if (!puzzle) return;
 
@@ -295,17 +544,35 @@ function showPuzzle(puzzleId) {
   puzzleContentEl.innerHTML = "";
   renderPuzzleContent(puzzle);
   
+    // Antwoord UI aanpassen per type
   if (puzzle.type === "sudoku") {
+    answerSection.style.display = "block";
     answerInput.style.display = "none";
+    checkAnswerButton.style.display = "";
     checkAnswerButton.textContent = "Controleer sudoku";
+  } else if (puzzle.type === "chrono") {
+    answerSection.style.display = "block";
+    answerInput.style.display = "none";
+    checkAnswerButton.style.display = "";
+    checkAnswerButton.textContent = "Controleer volgorde";
+  } else if (puzzle.type === "memory") {
+    answerSection.style.display = "none";
   } else {
+    answerSection.style.display = "block";
     answerInput.style.display = "";
+    checkAnswerButton.style.display = "";
     checkAnswerButton.textContent = "Controleer antwoord";
   }
 
   answerInput.value = "";
   answerInput.disabled = puzzle.status === "done";
   checkAnswerButton.disabled = puzzle.status === "done";
+  
+  if (puzzle.type === "flashQuiz" && puzzle.status !== "done") {
+    answerInput.disabled = true;
+    checkAnswerButton.disabled = true;
+  }
+
   setFeedback(
     puzzle.status === "done"
       ? "Je hebt deze puzzel al goed beantwoord. Goed gedaan!"
@@ -344,10 +611,16 @@ function renderPuzzleContent(puzzle) {
     renderImageZoomPuzzle(puzzle);
   } else if (puzzle.type === "sudoku") {
     renderSudokuPuzzle(puzzle);
+  } else if (puzzle.type === "memory") {
+    renderMemoryPuzzle(puzzle);
+  } else if (puzzle.type === "chrono") {
+    renderChronoPuzzle(puzzle);
   } else if (puzzle.type === "text" || puzzle.type === "custom") {
     const wrapper = document.createElement("div");
     wrapper.innerHTML = puzzle.html || "<p>Geen content ingesteld.</p>";
     puzzleContentEl.appendChild(wrapper);
+  } else if (puzzle.type === "flashQuiz") {
+    renderFlashQuizPuzzle(puzzle);
   } else {
     const fallback = document.createElement("p");
     fallback.textContent = "Dit puzzeltype wordt nog niet ondersteund.";
@@ -387,6 +660,110 @@ function renderImageZoomPuzzle(puzzle) {
   container.appendChild(hint);
 
   puzzleContentEl.appendChild(container);
+}
+
+function renderFlashQuizPuzzle(puzzle) {
+  const cards = puzzle.flashCards;
+  if (!Array.isArray(cards) || cards.length === 0) {
+    const msg = document.createElement("p");
+    msg.textContent = "Er zijn nog geen flash-foto's ingesteld voor deze puzzel.";
+    puzzleContentEl.appendChild(msg);
+    return;
+  }
+
+  clearFlashTimer();
+
+  // huidige index in de cyclus
+  if (typeof puzzle._flashIndex !== "number") {
+    puzzle._flashIndex = 0;
+  }
+  const idx = ((puzzle._flashIndex % cards.length) + cards.length) % cards.length;
+  const current = cards[idx];
+
+  // per kaart bijhouden of de vraag al eens is getoond
+  if (!puzzle._flashState) {
+    puzzle._flashState = {};
+  }
+  const stateForCard = puzzle._flashState[current.id] || { hasSeenQuestion: false };
+  const hasSeenQuestion = !!stateForCard.hasSeenQuestion;
+
+  // huidige kaart onthouden (voor handleCheckAnswer heb je evt. deze info)
+  puzzle._currentFlashId = current.id;
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "flashquiz-wrapper";
+
+  const imgStep = document.createElement("div");
+  imgStep.className = "flashquiz-step flashquiz-step-image";
+
+  const imgInfo = document.createElement("p");
+  imgInfo.textContent = `Kijk goed naar de foto... (${idx + 1} van ${cards.length})`;
+  imgInfo.className = "flashquiz-info";
+  imgStep.appendChild(imgInfo);
+
+  const img = document.createElement("img");
+  img.src = current.img;
+  img.alt = "Onthoud deze foto";
+  img.className = "flashquiz-image";
+  imgStep.appendChild(img);
+
+  const questionStep = document.createElement("div");
+  questionStep.className = "flashquiz-step flashquiz-step-question";
+
+  const qText = document.createElement("p");
+  qText.textContent = current.question || "Wat heb je gezien?";
+  questionStep.appendChild(qText);
+
+  const hint = document.createElement("p");
+  hint.className = "flashquiz-hint";
+  hint.textContent = "Typ je antwoord hieronder in en klik op 'Controleer antwoord'.";
+  questionStep.appendChild(hint);
+
+  wrapper.appendChild(imgStep);
+  wrapper.appendChild(questionStep);
+  puzzleContentEl.appendChild(wrapper);
+
+  // standaard: input leegmaken
+  answerInput.value = "";
+
+  if (puzzle.status === "done") {
+    // al opgelost → alleen vraag tonen, maar input dicht
+    imgStep.style.display = "none";
+    questionStep.style.display = "block";
+    answerInput.disabled = true;
+    checkAnswerButton.disabled = true;
+    return;
+  }
+
+  if (hasSeenQuestion) {
+    // hij is al eens bij de vraag geweest → geen nieuwe 3-seconden preview
+    imgStep.style.display = "none";
+    questionStep.style.display = "block";
+
+    answerInput.disabled = false;
+    checkAnswerButton.disabled = false;
+    answerInput.focus();
+  } else {
+    // eerste keer: 3 seconden foto, dan pas de vraag
+    imgStep.style.display = "block";
+    questionStep.style.display = "none";
+
+    answerInput.disabled = true;
+    checkAnswerButton.disabled = true;
+
+    flashTimerId = setTimeout(() => {
+      imgStep.style.display = "none";
+      questionStep.style.display = "block";
+
+      // markeer dat hij deze vraag nu 'gezien' heeft
+      stateForCard.hasSeenQuestion = true;
+      puzzle._flashState[current.id] = stateForCard;
+
+      answerInput.disabled = false;
+      checkAnswerButton.disabled = false;
+      answerInput.focus();
+    }, 3000);
+  }
 }
 
 function renderSudokuPuzzle(puzzle) {
@@ -445,6 +822,291 @@ function renderSudokuPuzzle(puzzle) {
   if (puzzle.status === "done") {
     disableSudokuInputs();
   }
+}
+
+function renderMemoryPuzzle(puzzle) {
+  const pairs = puzzle.memoryPairs;
+  if (!Array.isArray(pairs) || pairs.length === 0) {
+    const msg = document.createElement("p");
+    msg.textContent =
+      "Er zijn nog geen kaartjes ingesteld voor deze memory-puzzel.";
+    puzzleContentEl.appendChild(msg);
+    return;
+  }
+
+  // Maak van elk paar twee kaartjes
+  const cardsData = [];
+  pairs.forEach((pair) => {
+    cardsData.push({
+      pairId: pair.id,
+      label: pair.label,
+      img: pair.img
+    });
+    cardsData.push({
+      pairId: pair.id,
+      label: pair.label,
+      img: pair.img
+    });
+  });
+
+  // Simpel shuffle
+  for (let i = cardsData.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cardsData[i], cardsData[j]] = [cardsData[j], cardsData[i]];
+  }
+
+  const container = document.createElement("div");
+  container.className = "puzzle-memory";
+
+  const grid = document.createElement("div");
+  grid.className = "memory-grid";
+
+  let firstCard = null;
+  let secondCard = null;
+  let lockBoard = false;
+  let matchedCount = 0;
+
+  function resetSelection() {
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+  }
+
+  function onCardClick(e) {
+    const card = e.currentTarget;
+    if (lockBoard) return;
+    if (card.classList.contains("is-matched")) return;
+    if (card === firstCard) return;
+
+    card.classList.add("is-flipped");
+
+    if (!firstCard) {
+      firstCard = card;
+      return;
+    }
+
+    secondCard = card;
+    lockBoard = true;
+
+    const pair1 = firstCard.dataset.pairId;
+    const pair2 = secondCard.dataset.pairId;
+
+    if (pair1 === pair2) {
+      // Match!
+      firstCard.classList.add("is-matched");
+      secondCard.classList.add("is-matched");
+      matchedCount += 2;
+      resetSelection();
+
+      if (matchedCount === cardsData.length) {
+        // Alles gevonden → puzzel klaar
+        puzzle.status = "done";
+        saveStateToStorage();
+        clearMemoryTimer();
+        updateStatusPill(puzzleStatusEl, puzzle.status);
+        renderOverview();
+        if (typeof updateSecretUI === "function") {
+          updateSecretUI();
+        }
+        setFeedback("Alle paren gevonden, goed gedaan! 🎉", "correct");
+      }
+    } else {
+      // Geen match → kort laten zien, dan weer dicht
+      setTimeout(() => {
+        firstCard.classList.remove("is-flipped");
+        secondCard.classList.remove("is-flipped");
+        resetSelection();
+      }, 800);
+    }
+  }
+
+  cardsData.forEach((cardData, index) => {
+    const card = document.createElement("div");
+    card.className = "memory-card";
+    card.dataset.pairId = cardData.pairId;
+
+    const inner = document.createElement("div");
+    inner.className = "memory-card-inner";
+
+    const front = document.createElement("div");
+    front.className = "memory-card-front";
+    front.textContent = "?";
+
+    const back = document.createElement("div");
+    back.className = "memory-card-back";
+
+    if (cardData.img) {
+      const img = document.createElement("img");
+      img.src = cardData.img;
+      img.alt = cardData.label || "Memory kaartje";
+      back.appendChild(img);
+    } else {
+      back.textContent = cardData.label || "Kaartje";
+    }
+
+    inner.appendChild(front);
+    inner.appendChild(back);
+    card.appendChild(inner);
+
+    card.addEventListener("click", onCardClick);
+
+    grid.appendChild(card);
+  });
+
+  container.appendChild(grid);
+  puzzleContentEl.appendChild(container);
+  startMemoryTimer(puzzle);
+}
+
+function renderChronoPuzzle(puzzle) {
+  const items = puzzle.chronoItems;
+  if (!Array.isArray(items) || items.length === 0) {
+    const msg = document.createElement("p");
+    msg.textContent = "Er zijn geen foto's ingesteld voor deze puzzel.";
+    puzzleContentEl.appendChild(msg);
+    return;
+  }
+
+  // Kopie + shuffle
+  const shuffled = items.slice();
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  const container = document.createElement("div");
+  container.className = "puzzle-chrono";
+
+  const pool = document.createElement("div");
+  pool.className = "chrono-pool";
+  pool.id = `chrono-${puzzle.id}-pool`;
+
+  let selectedCard = null;
+
+  function selectCard(card) {
+    if (selectedCard === card) {
+      // zelfde kaart nog eens -> deselect
+      card.classList.remove("chrono-item-selected");
+      selectedCard = null;
+      return;
+    }
+    if (selectedCard) {
+      selectedCard.classList.remove("chrono-item-selected");
+    }
+    selectedCard = card;
+    card.classList.add("chrono-item-selected");
+  }
+
+  // alle kaartjes in de pool
+  shuffled.forEach((item) => {
+    const card = document.createElement("div");
+    card.className = "chrono-item";
+    card.dataset.photoId = item.id;
+
+    const img = document.createElement("img");
+    img.src = item.img;
+    img.alt = item.label || "Moment";
+
+    card.appendChild(img);
+
+    card.addEventListener("click", () => {
+      selectCard(card);
+    });
+
+    pool.appendChild(card);
+  });
+
+  // klik op de pool zelf -> geselecteerde kaart terugleggen
+  pool.addEventListener("click", (e) => {
+    // voorkomen dat klik op kaart zelf hier ook triggert
+    if (e.target.closest(".chrono-item")) return;
+    if (!selectedCard) return;
+
+    const poolEl = document.getElementById(`chrono-${puzzle.id}-pool`);
+    if (poolEl && selectedCard) {
+      poolEl.appendChild(selectedCard);
+      selectedCard.classList.remove("chrono-item-selected");
+      selectedCard = null;
+    }
+  });
+
+  const slotsWrapper = document.createElement("div");
+  slotsWrapper.className = "chrono-slots";
+
+  puzzle.correctOrder.forEach((_, index) => {
+    const slot = document.createElement("div");
+    slot.className = "chrono-slot";
+    slot.id = `chrono-${puzzle.id}-slot-${index}`;
+
+    const label = document.createElement("div");
+    label.className = "chrono-slot-label";
+    label.textContent = `${index + 1}`;
+
+    slot.appendChild(label);
+
+    // tik op slot -> geselecteerde kaart in dit slot zetten
+    slot.addEventListener("click", () => {
+      if (!selectedCard) return;
+
+      // als er al een kaart in zit -> terug naar pool
+      const existing = slot.querySelector(".chrono-item");
+      if (existing) {
+        const poolEl = document.getElementById(`chrono-${puzzle.id}-pool`);
+        if (poolEl) {
+          poolEl.appendChild(existing);
+        }
+      }
+
+      slot.appendChild(selectedCard);
+      selectedCard.classList.remove("chrono-item-selected");
+      selectedCard = null;
+    });
+
+    slotsWrapper.appendChild(slot);
+  });
+
+  // SIDE-BY-SIDE LAYOUT: links slots, rechts pool
+  const layout = document.createElement("div");
+  layout.className = "chrono-layout";
+
+  const left = document.createElement("div");
+  left.className = "chrono-left";
+  left.appendChild(slotsWrapper);
+
+  const right = document.createElement("div");
+  right.className = "chrono-right";
+  right.appendChild(pool);
+
+  layout.appendChild(left);
+  layout.appendChild(right);
+
+  container.appendChild(layout);
+  puzzleContentEl.appendChild(container);
+}
+
+function readChronoOrder(puzzle) {
+  const order = [];
+  puzzle.correctOrder.forEach((_, index) => {
+    const slot = document.getElementById(`chrono-${puzzle.id}-slot-${index}`);
+    if (!slot) {
+      order.push(null);
+      return;
+    }
+    const item = slot.querySelector(".chrono-item");
+    order.push(item ? item.dataset.photoId : null);
+  });
+  return order;
+}
+
+function isChronoCorrect(puzzle, currentOrder) {
+  if (!Array.isArray(currentOrder)) return false;
+  if (currentOrder.length !== puzzle.correctOrder.length) return false;
+  for (let i = 0; i < currentOrder.length; i++) {
+    if (currentOrder[i] !== puzzle.correctOrder[i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 function readSudokuGrid(puzzle) {
@@ -522,11 +1184,20 @@ function updateStatusPill(el, status) {
 // ==== Event handlers ====
 
 backButton.addEventListener("click", () => {
+  clearMemoryTimer();
+  clearFlashTimer();
   puzzleView.classList.remove("view--active");
   overviewView.classList.add("view--active");
   currentPuzzleId = null;
   setFeedback("", null);
 });
+
+function clearFlashTimer() {
+  if (flashTimerId !== null) {
+    clearTimeout(flashTimerId);
+    flashTimerId = null;
+  }
+}
 
 function handleCheckAnswer() {
   if (!currentPuzzleId) return;
@@ -534,15 +1205,15 @@ function handleCheckAnswer() {
   const puzzle = puzzles.find((p) => p.id === currentPuzzleId);
   if (!puzzle) return;
 
-  // --- SUDOKU SPECIAAL ---
+  // --- SUDOKU ---
   if (puzzle.type === "sudoku") {
     const grid = readSudokuGrid(puzzle);
 
     if (isValidSudokuGrid(grid)) {
       puzzle.status = "done";
+      saveStateToStorage();
       updateStatusPill(puzzleStatusEl, puzzle.status);
       renderOverview();
-      // als je updateSecretUI() hebt voor je geheime knop, hier ook aanroepen
       if (typeof updateSecretUI === "function") {
         updateSecretUI();
       }
@@ -560,7 +1231,93 @@ function handleCheckAnswer() {
     }
   }
 
-  // --- NORMALE Puzzels (audio / text / custom / imageZoom) ---
+  // --- CHRONOLOGISCHE FOTO-PUZZEL ---
+  if (puzzle.type === "chrono") {
+    const currentOrder = readChronoOrder(puzzle);
+    if (currentOrder.some((id) => id === null)) {
+      setFeedback(
+        "Niet alle vakjes zijn gevuld. Sleep alle foto's naar een plek.",
+        "wrong"
+      );
+      return;
+    }
+
+    if (isChronoCorrect(puzzle, currentOrder)) {
+      puzzle.status = "done";
+      saveStateToStorage();
+      updateStatusPill(puzzleStatusEl, puzzle.status);
+      renderOverview();
+      if (typeof updateSecretUI === "function") {
+        updateSecretUI();
+      }
+
+      setFeedback("De volgorde klopt helemaal, mooi gedaan! 🎉", "correct");
+      checkAnswerButton.disabled = true;
+      return;
+    } else {
+      setFeedback(
+      "Deze volgorde klopt nog niet helemaal. De foto's worden opnieuw geschud… 🔁",
+      "wrong"
+      );
+
+    // puzzel resetten: content leegmaken en opnieuw opbouwen (met nieuwe shuffle)
+    puzzleContentEl.innerHTML = "";
+    renderChronoPuzzle(puzzle);
+    return;
+  }
+}
+    // --- FLASH QUIZ (3 seconden foto, dan vraag) ---
+    if (puzzle.type === "flashQuiz") {
+      const cards = puzzle.flashCards || [];
+      if (!Array.isArray(cards) || cards.length === 0) return;
+
+      const userAnswer = answerInput.value;
+      if (!userAnswer.trim()) {
+        setFeedback("Vul eerst een antwoord in.", "wrong");
+        return;
+      }
+
+      // bepaal huidige kaart
+      if (typeof puzzle._flashIndex !== "number") {
+        puzzle._flashIndex = 0;
+      }
+      const idx = ((puzzle._flashIndex % cards.length) + cards.length) % cards.length;
+      const current = cards[idx];
+
+      const userNorm = normalizeAnswer(userAnswer);
+      const isCorrect =
+        Array.isArray(current.correctAnswers) &&
+        current.correctAnswers.some((ans) => normalizeAnswer(ans) === userNorm);
+
+      if (isCorrect) {
+        puzzle.status = "done";
+        saveStateToStorage();
+        updateStatusPill(puzzleStatusEl, puzzle.status);
+        renderOverview();
+        if (typeof updateSecretUI === "function") {
+          updateSecretUI();
+        }
+
+        clearFlashTimer();
+        setFeedback("Goed opgelet! Deze puzzel is opgelost.", "correct");
+        answerInput.disabled = true;
+        checkAnswerButton.disabled = true;
+        return;
+      } else {
+        // fout → volgende kaart in de cyclus
+        puzzle._flashIndex = (idx + 1) % cards.length;
+        setFeedback(
+          "Helaas… De volgende foto komt eraan!",
+          "wrong"
+        );
+        // opnieuw opbouwen (nieuwe foto, nieuwe timer)
+        puzzleContentEl.innerHTML = "";
+        renderFlashQuizPuzzle(puzzle);
+        return;
+      }
+    }
+
+  // --- NORMALE PUZZELS (text/audio/custom/imageZoom) ---
   const userAnswer = answerInput.value;
 
   if (!userAnswer.trim()) {
@@ -570,6 +1327,7 @@ function handleCheckAnswer() {
 
   if (isAnswerCorrect(puzzle, userAnswer)) {
     puzzle.status = "done";
+    saveStateToStorage();
     updateStatusPill(puzzleStatusEl, puzzle.status);
     renderOverview();
     if (typeof updateSecretUI === "function") {
@@ -639,6 +1397,38 @@ secretModalBackdrop.addEventListener("click", () => {
   secretModal.classList.remove("modal--visible");
 });
 
+let itPietClickCount = 0;
+let itPietClickTimer = null;
+
+if (itPietTrigger) {
+  itPietTrigger.addEventListener("click", () => {
+    itPietClickCount++;
+
+    if (itPietClickTimer) clearTimeout(itPietClickTimer);
+
+    itPietClickTimer = setTimeout(() => {
+      itPietClickCount = 0;
+    }, 2000);
+
+    if (itPietClickCount >= 5) {
+      itPietClickCount = 0;
+      clearTimeout(itPietClickTimer);
+      resetAllPuzzles();
+    }
+  });
+}
+
+/*
+window.addEventListener("beforeunload", (event) => {
+  // Als nog niet alles is opgelost, warnen bij verlaten/herladen
+  if (!areAllPuzzlesSolved()) {
+    event.preventDefault();
+    event.returnValue = ""; // verplicht voor sommige browsers
+  }
+});
+*/
+
 // ==== Init ====
+loadStateFromStorage();
 renderOverview();
 updateSecretUI();

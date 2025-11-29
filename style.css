@@ -480,23 +480,19 @@ body {
 }
 
 .site-footer-inner {
-  margin: 0 auto;
-  max-width: var(--max-width);
-  color: var(--color-muted);
-  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-between; /* links = it-piet, rechts = hintknop */
+  align-items: center;
+  gap: 1rem;
 }
 
-/* Geheime eindhint knop onderin */
-.secret-section {
-  margin-top: 1rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
+.site-footer-inner #secret-button {
+  margin-left: auto; /* extra zekerheid dat hij rechts staat */
 }
 
 .btn--secret {
-  position: relative;
-  padding-inline: 1.6rem;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.9rem;
 }
 
 /* Extra glow als alles is unlocked */
@@ -577,6 +573,79 @@ body {
   white-space: pre-line; /* zodat je \n in JS netjes op nieuwe regels komen */
 }
 
+/* MEMORY PUZZEL */
+.puzzle-memory {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(60px, 80px));
+  gap: 0.5rem;
+}
+
+.memory-card {
+  perspective: 600px;
+  cursor: pointer;
+}
+
+.memory-card-inner {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* vierkant */
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease;
+}
+
+.memory-card-front,
+.memory-card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.memory-card-front {
+  background: rgba(5, 7, 22, 0.85);
+  border: 1px solid rgba(244, 197, 66, 0.5);
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.memory-card-back {
+  transform: rotateY(180deg);
+  background: rgba(244, 197, 66, 0.15);
+  border: 1px solid rgba(244, 197, 66, 0.7);
+  overflow: hidden;
+}
+
+.memory-card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.memory-card.is-flipped .memory-card-inner {
+  transform: rotateY(180deg);
+}
+
+.memory-card.is-matched {
+  cursor: default;
+  opacity: 0.75;
+}
+
+.memory-timer {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-accent-soft);
+}
+
 /* Responsiveness */
 @media (max-width: 768px) {
   .overview-inner,
@@ -595,4 +664,147 @@ body {
   #answer-input {
     width: 100%;
   }
+}
+
+#toast-container {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 9999;
+  pointer-events: none; /* belangrijk: kliks gaan erdoorheen */
+}
+
+.toast {
+  background: rgba(20, 20, 30, 0.9);
+  color: var(--color-text);
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(244, 197, 66, 0.5);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CHRONOLOGISCHE FOTO-PUZZEL */
+.puzzle-chrono {
+  margin-top: 0.5rem;
+}
+
+/* hoofd-layout: slots links, foto's rechts */
+.chrono-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+.chrono-left,
+.chrono-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* zelfde maat voor slot én foto-kaart */
+.chrono-slot,
+.chrono-item {
+  width: 110px;
+  height: 110px;
+}
+
+/* slotjes (antwoord-vakken) */
+.chrono-slot {
+  border-radius: 10px;
+  border: 1px dashed rgba(244, 197, 66, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.chrono-slot-label {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font-size: 0.8rem;
+  color: var(--color-accent-soft);
+}
+
+/* foto-kaart zelf */
+.chrono-item {
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* de foto vult precies het kaartje */
+.chrono-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+  border: 1px solid rgba(244, 197, 66, 0.7);
+  box-sizing: border-box;
+}
+
+/* geselecteerde kaart highlight */
+.chrono-item.chrono-item-selected {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 8px rgba(244, 197, 66, 0.6);
+}
+
+/* mobiel: iets kleiner, maar nog steeds naast elkaar */
+@media (max-width: 600px) {
+  .chrono-layout {
+    gap: 1.25rem;
+  }
+
+  .chrono-slot,
+  .chrono-item {
+    width: 88px;
+    height: 88px;
+  }
+}
+
+.flashquiz-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.flashquiz-image {
+  max-width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(244, 197, 66, 0.7);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
+}
+
+.flashquiz-info {
+  font-size: 0.9rem;
+  color: var(--color-accent-soft);
+}
+
+.flashquiz-hint {
+  font-size: 0.85rem;
+  color: var(--color-muted);
 }

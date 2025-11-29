@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <title>Jasperino</title>
+  <title>Jappie krijgt een klappie</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
   <script defer src="script.js"></script>
@@ -11,7 +11,7 @@
   <div class="page">
     <header class="site-header">
       <div class="site-header-inner">
-        <h1>Surprise voor Jaspertje</h1>
+        <h1>Surprise voor Jasper</h1>
       </div>
     </header>
 
@@ -48,9 +48,8 @@
           </div>
 
           <!-- Antwoord-invoer -->
-          <div class="puzzle-answer">
+          <div id="answer-section" class="puzzle-answer">
             <label for="answer-input" class="answer-label">
-              Jouw antwoord
             </label>
             <div class="puzzle-answer-row">
               <input
@@ -68,26 +67,19 @@
         </div>
       </div>
 
-            <!-- Geheime eindhint knop -->
-      <div class="secret-section">
-        <button id="secret-button" class="btn btn--secret">
-          🎁 Geheime eindhint
-        </button>
-      </div>
-
       <!-- Pop-up met geheime locatie -->
       <div id="secret-modal" class="modal">
         <div id="secret-modal-backdrop" class="modal-backdrop"></div>
         <div class="modal-dialog">
           <div class="modal-header">
-            <h2>Geheime locatie</h2>
+            <h2>Helaas!</h2>
             <button id="secret-modal-close" class="modal-close" aria-label="Sluiten">
               &times;
             </button>
           </div>
           <div class="modal-body">
             <div id="secret-locked-message">
-              Je bent er bijna! Los eerst alle puzzels op om de geheime locatie te zien.
+              Los eerst alle puzzels op om de hint te zien.
             </div>
             <div id="secret-location" class="secret-location-text"></div>
           </div>
@@ -98,9 +90,13 @@
 
     <footer class="site-footer">
       <div class="site-footer-inner">
-        <small>Gemaakt door de IT-piet</small>
+        <span id="it-piet-trigger">gemaakt door de IT-piet</span>
+        <button id="secret-button" class="btn btn--secret">
+          Hint onthullen
+        </button>
       </div>
     </footer>
   </div>
+  <div id="toast-container"></div>
 </body>
 </html>
