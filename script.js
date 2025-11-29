@@ -114,6 +114,36 @@ const puzzles = [
     ],
     correctAnswers: ["Breda", "Easystreet", "Easy Street", "Easystreet Breda"]
     // runtime property: currentStage (wordt automatisch gezet)
+  },
+  {
+    id: "p6",
+    title: "Sinterdoku",
+    theme: "Logica",
+    status: "open",
+    type: "sudoku",
+    introHtml: `
+      <p>
+        Vul de sudoku in. De gewone regels gelden:
+        elk cijfer 1 t/m 9 komt precies één keer voor
+        in iedere rij, kolom en 3×3 blok.
+      </p>
+    `,
+  // 0 = leeg vakje
+    sudokuGrid: [
+      [0,0,0, 2,6,0, 7,0,1],
+      [6,8,0, 0,7,0, 0,9,0],
+      [1,9,0, 0,0,4, 5,0,0],
+
+      [8,2,0, 1,0,0, 0,4,0],
+      [0,0,4, 6,0,2, 9,0,0],
+      [0,5,0, 0,0,3, 0,2,8],
+
+      [0,0,9, 3,0,0, 0,7,4],
+      [0,4,0, 0,5,0, 0,3,6],
+      [7,0,3, 0,1,8, 0,0,0]
+    ],
+    // wordt niet gebruikt, maar laat leeg voor duidelijkheid
+    correctAnswers: []
   }
 ];
 
@@ -264,6 +294,14 @@ function showPuzzle(puzzleId) {
 
   puzzleContentEl.innerHTML = "";
   renderPuzzleContent(puzzle);
+  
+  if (puzzle.type === "sudoku") {
+    answerInput.style.display = "none";
+    checkAnswerButton.textContent = "Controleer sudoku";
+  } else {
+    answerInput.style.display = "";
+    checkAnswerButton.textContent = "Controleer antwoord";
+  }
 
   answerInput.value = "";
   answerInput.disabled = puzzle.status === "done";
@@ -304,6 +342,8 @@ function renderPuzzleContent(puzzle) {
     puzzleContentEl.appendChild(audio);
   } else if (puzzle.type === "imageZoom") {
     renderImageZoomPuzzle(puzzle);
+  } else if (puzzle.type === "sudoku") {
+    renderSudokuPuzzle(puzzle);
   } else if (puzzle.type === "text" || puzzle.type === "custom") {
     const wrapper = document.createElement("div");
     wrapper.innerHTML = puzzle.html || "<p>Geen content ingesteld.</p>";
@@ -349,6 +389,129 @@ function renderImageZoomPuzzle(puzzle) {
   puzzleContentEl.appendChild(container);
 }
 
+function renderSudokuPuzzle(puzzle) {
+  const grid = puzzle.sudokuGrid;
+  if (!Array.isArray(grid) || grid.length !== 9) {
+    const msg = document.createElement("p");
+    msg.textContent = "Sudoku niet goed geconfigureerd.";
+    puzzleContentEl.appendChild(msg);
+    return;
+  }
+
+  const container = document.createElement("div");
+  container.className = "puzzle-sudoku";
+
+  const table = document.createElement("table");
+  table.className = "sudoku-grid";
+
+  for (let r = 0; r < 9; r++) {
+    const tr = document.createElement("tr");
+    for (let c = 0; c < 9; c++) {
+      const td = document.createElement("td");
+      td.className = "sudoku-cell sudoku-cell-r" + r + "c" + c;
+
+      const value = grid[r][c];
+      if (value) {
+        const span = document.createElement("span");
+        span.textContent = value;
+        span.className = "sudoku-cell-fixed";
+        td.appendChild(span);
+      } else {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.inputMode = "numeric";
+        input.maxLength = 1;
+        input.className = "sudoku-cell-input";
+        input.id = `sudoku-${puzzle.id}-r${r}-c${c}`;
+
+        input.addEventListener("input", (e) => {
+          // Alleen 1-9 toestaan
+          const v = e.target.value.replace(/[^1-9]/g, "");
+          e.target.value = v;
+        });
+
+        td.appendChild(input);
+      }
+
+      tr.appendChild(td);
+    }
+    table.appendChild(tr);
+  }
+
+  container.appendChild(table);
+  puzzleContentEl.appendChild(container);
+
+  // Als puzzel al klaar is, inputs blokkeren
+  if (puzzle.status === "done") {
+    disableSudokuInputs();
+  }
+}
+
+function readSudokuGrid(puzzle) {
+  const result = [];
+  for (let r = 0; r < 9; r++) {
+    result[r] = [];
+    for (let c = 0; c < 9; c++) {
+      const fixed = puzzle.sudokuGrid[r][c];
+      if (fixed) {
+        result[r][c] = fixed;
+      } else {
+        const id = `sudoku-${puzzle.id}-r${r}-c${c}`;
+        const input = document.getElementById(id);
+        const n = input ? parseInt(input.value, 10) : NaN;
+        result[r][c] = isNaN(n) ? 0 : n;
+      }
+    }
+  }
+  return result;
+}
+
+function isValidSudokuGrid(grid) {
+  const n = 9;
+
+  const is1to9 = (arr) => {
+    if (arr.some((v) => v < 1 || v > 9)) return false;
+    const set = new Set(arr);
+    return set.size === 9;
+  };
+
+  // Rijen
+  for (let r = 0; r < n; r++) {
+    if (!is1to9(grid[r])) return false;
+  }
+
+  // Kolommen
+  for (let c = 0; c < n; c++) {
+    const col = [];
+    for (let r = 0; r < n; r++) {
+      col.push(grid[r][c]);
+    }
+    if (!is1to9(col)) return false;
+  }
+
+  // 3x3 blokken
+  for (let br = 0; br < 3; br++) {
+    for (let bc = 0; bc < 3; bc++) {
+      const block = [];
+      for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 3; c++) {
+          block.push(grid[br * 3 + r][bc * 3 + c]);
+        }
+      }
+      if (!is1to9(block)) return false;
+    }
+  }
+
+  return true;
+}
+
+function disableSudokuInputs() {
+  const inputs = document.querySelectorAll(".sudoku-cell-input");
+  inputs.forEach((input) => {
+    input.disabled = true;
+  });
+}
+
 function updateStatusPill(el, status) {
   el.classList.remove("status-open", "status-done");
   const isDone = status === "done";
@@ -371,6 +534,33 @@ function handleCheckAnswer() {
   const puzzle = puzzles.find((p) => p.id === currentPuzzleId);
   if (!puzzle) return;
 
+  // --- SUDOKU SPECIAAL ---
+  if (puzzle.type === "sudoku") {
+    const grid = readSudokuGrid(puzzle);
+
+    if (isValidSudokuGrid(grid)) {
+      puzzle.status = "done";
+      updateStatusPill(puzzleStatusEl, puzzle.status);
+      renderOverview();
+      // als je updateSecretUI() hebt voor je geheime knop, hier ook aanroepen
+      if (typeof updateSecretUI === "function") {
+        updateSecretUI();
+      }
+
+      setFeedback("Perfect! De sudoku is helemaal goed. 🎉", "correct");
+      disableSudokuInputs();
+      checkAnswerButton.disabled = true;
+      return;
+    } else {
+      setFeedback(
+        "De sudoku klopt nog niet helemaal. Controleer rijen, kolommen en blokken.",
+        "wrong"
+      );
+      return;
+    }
+  }
+
+  // --- NORMALE Puzzels (audio / text / custom / imageZoom) ---
   const userAnswer = answerInput.value;
 
   if (!userAnswer.trim()) {
@@ -382,7 +572,9 @@ function handleCheckAnswer() {
     puzzle.status = "done";
     updateStatusPill(puzzleStatusEl, puzzle.status);
     renderOverview();
-    updateSecretUI();
+    if (typeof updateSecretUI === "function") {
+      updateSecretUI();
+    }
 
     setFeedback("Helemaal goed! Deze puzzel is afgerond. 🎉", "correct");
     answerInput.disabled = true;
@@ -395,7 +587,6 @@ function handleCheckAnswer() {
       "wrong"
     );
 
-    // Extra logica voor imageZoom: een stap verder uitzoomen
     if (puzzle.type === "imageZoom") {
       if (typeof puzzle.currentStage !== "number") {
         puzzle.currentStage = 0;
