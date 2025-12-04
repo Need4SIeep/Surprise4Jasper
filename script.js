@@ -11,7 +11,7 @@
 const puzzles = [
   {
     id: "p1",
-    title: "Als muziek in m'n oren",
+    title: "Als muziek in Jaspers oren",
     theme: "Muziek",
     status: "open",
     type: "audio",
@@ -139,7 +139,7 @@ const puzzles = [
     type: "custom",
     introHtml: "<p>Ja ook dat weet hij</p>",
     html: `
-      <p>Wat voor auto raakte Jasper tijdens het wedrijden bij de Antwerpenstraat op 5 augustus 2025?</p>
+      <p>Wat voor auto raakte Jasper tijdens het wegrijden bij de Antwerpenstraat op 5 augustus 2025?</p>
 
       <video 
         width="100%" 
@@ -153,7 +153,7 @@ const puzzles = [
         Je browser ondersteunt geen video.
       </video>
     `,
-    correctAnswers: ["toyota aygo", "aygo"]
+    correctAnswers: ["toyota aygo", "aygo", "toyota yaris", "yaris"]
   },
   {
     id: "p5",
@@ -287,8 +287,7 @@ function loadStateFromStorage() {
 }
 
 const SECRET_LOCATION_TEXT = `
-Je cadeau ligt in de kast in de woonkamer,
-achter de stapel spelletjes, in de rode doos met gouden strik.
+Je cadeau ligt buiten onder de afkap in een goudkleurige tas
 `;
 
 // ==== DOM referenties ====
